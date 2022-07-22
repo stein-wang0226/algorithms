@@ -15,7 +15,8 @@ signed main(){
 #endif
 cin>>n>>m>>x;
 for(int i=1;i<=n;i++)cin>>a[i];
-for(int i=1;i<=m;i++)cin>>b[i]； 
+for(int i=1;i<=m;i++)cin>>b[i];
+//模板
 int ans=0;
  for (int i = 1, j = m ; i <= n; i ++ )
     {
