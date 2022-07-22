@@ -1,0 +1,1 @@
+{"name":"Local: 区间更新+区间最值","url":"e:\\algorithms\\数据结构\\线段树\\区间更新+区间最值.cpp","tests":[{"id":1657472442689,"input":"10 5\n1 3\n2 5\n3 6\n7 8\n9 10","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\algorithms\\数据结构\\线段树\\区间更新+区间最值.cpp","group":"local","local":true}
