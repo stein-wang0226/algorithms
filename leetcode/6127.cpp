@@ -12,31 +12,37 @@ class Solution {
 public:
     map<int,int>cnt;//bit数
     map<int,int>sum;//后缀和
+    set<int>st;
     long long countExcellentPairs(vector<int>& nums, int k) {
         // 就是二进制1总个数
         for(auto i:nums){
+            st.insert(i);
+        }
+        for(auto i:st){
             cnt[ __builtin_popcount(i)]++;
         }
-        map<int,int>tmp;
-        tmp=cnt;
-        reverse(tmp.begin(),tmp.end());
         int len=cnt.size();
         int count=0;
-        for(auto i:tmp){
-            count+=i.second;
-            sum[i.first]=count;
+        for(auto it=cnt.rbegin();it!=cnt.rend();it++){
+            count+=(*it).second;
+            sum[(*it).first]=count;
         }
         long long res=0;
         for(auto i:cnt){
             int nn=k-i.first;
-            int pos=int(lower_bound(sum.begin(),sum.end(),nn)-sum.begin());
+
+           if((sum.lower_bound(nn))!=sum.end()){
+            auto pos=(*sum.lower_bound(nn)).first;
             res+=(i.second)*sum[pos];
+           }
         }
 
         return res;
     }
-};
+}solve;
+
 int main(){
-
-
+vector<int>nums={1,2,3,1};
+int ans=solve.countExcellentPairs(nums,3);
+cout<<ans;
 }
