@@ -1,0 +1,31 @@
+{
+  "C_Cpp_Runner.cCompilerPath": "D:/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gcc.exe",
+  "editor.fontFamily": "'Fira Code',Consolas",
+  "editor.fontLigatures": true,
+  "C_Cpp_Runner.cppCompilerPath": "D:/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/g++.exe",
+  "C_Cpp_Runner.debuggerPath": "D:/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gdb.exe",
+  "C_Cpp_Runner.makePath": "D:/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/make.exe",
+  "C_Cpp_Runner.warnings": [
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "emmet.triggerExpansionOnTab": true,
+  "C_Cpp_Runner.compilerArgs": [],
+  "C_Cpp_Runner.includePaths": [],
+  "C_Cpp_Runner.linkerArgs": [],
+  "C_Cpp_Runner.cStandard": "",
+  "C_Cpp_Runner.cppStandard": "",
+  "C_Cpp_Runner.excludeSearch": [],
+  "C_Cpp_Runner.enableWarnings": true,
+  "C_Cpp_Runner.warningsAsError": false,
+  "C_Cpp.errorSquiggles": "Enabled",
+  "C_Cpp.intelliSenseEngineFallback": "Enabled",
+  "C_Cpp_Runner.msvcBatchPath": "",
+  "C_Cpp_Runner.useMsvc": false,
+  "C_Cpp_Runner.includeSearch": [
+    "*",
+    "**/*"
+  ]
+  
+}
