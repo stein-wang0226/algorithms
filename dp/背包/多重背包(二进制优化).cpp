@@ -9,7 +9,7 @@ int main() {
 	cin>>t;
 	while(t--) {
 		memset(dp,0,sizeof dp);
-		scanf("%d %d ",&v,&n);//n为种数,v为金额
+		scanf("%d %d ",&n,&v);//n为种数,v为金额
 		for(int i=1; i<=n; i++) {
 			scanf("%d %d %d",&c[i],&w[i],&m[i]);
 		}

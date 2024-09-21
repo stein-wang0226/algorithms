@@ -2,6 +2,7 @@
 #define LOCAL
 //#define int long long
 using namespace std;
+//每次选一个分界点将一段分开 (左小右大)
 const int N=1e5+5;
 int a[N];
 void quick_sort(int a[],int l,int r){
@@ -17,19 +18,19 @@ void quick_sort(int a[],int l,int r){
 }
 
 signed main(){
-std::ios::sync_with_stdio(false);
-cin.tie(0); 
-cout.tie(0);
+  std::ios::sync_with_stdio(false);
+  cin.tie(0); 
+  cout.tie(0);
 #ifdef LOCAL
-    freopen("data.in","r",stdin);
-    freopen("data.out","w",stdout);
+  freopen("data.in","r",stdin);
+  freopen("data.out","w",stdout);
 #endif
-int n;
-cin>>n;
-for(int i=0;i<n;i++){
-  cin>>a[i];
-}
-quick_sort(a,0,n-1);
-for(int i=0;i<n;i++)cout<<a[i]<<" ";
+  int n;
+  cin>>n;
+  for(int i=0;i<n;i++){
+    cin>>a[i];
+  }
+  quick_sort(a,0,n-1);
+  for(int i=0;i<n;i++)cout<<a[i]<<" ";
     return 0;
 }

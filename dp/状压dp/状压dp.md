@@ -30,6 +30,8 @@
 
 [关灯问题]:https://www.luogu.com.cn/problem/P2622
 
+![image-20240818142413549](C:\Users\86172\AppData\Roaming\Typora\typora-user-images\image-20240818142413549.png)
+
 #### 分析：
 
  考虑状态压缩，可以把灯的开和关视作1和0，则用一串01串（二进制）表示这一串灯的一个总的状态。
@@ -37,7 +39,7 @@
 因为这个01串是而进制，所以他们所对应的10进制数最大不会超过（2<<10）-1=1023
 也就是说最多有1023种状态，所以当然是可行的。
 
-那么这题就可以直接广搜暴利解决，利用之前的计算方法，开灯（1）就是把对应的那一位0变成1： x|=1<<(i-1),如果本身是1的话当然没有任何影响。
+那么这题就可以直接广搜暴力(每按一次相当于走一步)解决，利用之前的计算方法，开灯（1）就是把对应的那一位0变成1： x|=1<<(i-1),如果本身是1的话当然没有任何影响。
 同理，关灯（-1）的话就是把对应的那一位1变成0： x=x&~(1<<(i-1)),当然如果本身是0 ，也没有影响啦。
 
 
@@ -371,7 +373,7 @@ signed main() {
 
 #### 题意：
 
-农夫约翰的土地由 M×NM×N 个小方格组成，现在他要在土地里种植玉米。
+农夫约翰的土地由 M×N个小方格组成，现在他要在土地里种植玉米。
 
 非常遗憾，部分土地是不育的，无法种植。
 
@@ -385,7 +387,7 @@ signed main() {
 
 和上一题类似 没有个数限制
 
-dp[i] [j]  表示已经摆完前i行，且改行状态是s的集合
+dp[i] [j]  表示已经摆完前i行，且该行状态是s的集合
 
 不相邻：1.每行无连续1   2.对相邻状态a，b：（a&b）==0;
 
@@ -393,7 +395,6 @@ dp[i] [j]  表示已经摆完前i行，且改行状态是s的集合
 
 ```C++
 #include <bits/stdc++.h>
-//# pragma GCC optimize(3)
 #define int long long
 #define endl "\n"
 using namespace std;
@@ -449,22 +450,21 @@ void solve(){
     //                 f[i & 1][st] = (f[i & 1][st] + f[(i - 1) & 1][pre_st]) % mod;
     //     }
     // cout << f[(n + 1) & 1][0] << endl;
-int ans=dp[n+1][0];  //上一题同款操作
-cout<<ans<<endl;
+	int ans=dp[n+1][0];  //上一题同款操作
+	cout<<ans<<endl;
 
 }
 signed main() {
   std::ios::sync_with_stdio(false);
   cin.tie(0);
   cout.tie(0);
-
-
       solve();
-  
   return 0;
 }
 
 ```
+
+
 
 ### 例6.HDU - 5418 Victor and World （TSP问题求最小哈密顿回路 floyd + 状压dp）
 
@@ -482,11 +482,11 @@ signed main() {
 
 ##### 状态表示：
 
-dp[i] [j]   i表示每个点选与不算   表示最后一个点是j  dp[i] [j] 表示该状态下的 最小值
+dp[i] [j]   i表示所有点选择状态      表示最后一个点是j  dp[i] [j] 表示该状态下的 最小值
 
 ##### 状态转移：
 
-遍历i j  满足 i&1<<j     枚举点k作为j的前一个点dp[i] [j]=min(dp[i] [j],dp [i-(1<<j)] [k]+w [k] [j])
+遍历i j  满足 i&(1<<j) 枚举点k作为j的前一个点dp[i] [j]=min(dp[i] [j],dp [i-(1<<j)] [k]+w [k] [j])
 
 为什么是对的：  已经得到之前状态的最优解 ，那么我们只要考虑最后一步，类似前两题的表示
 
@@ -496,7 +496,6 @@ dp[i] [j]   i表示每个点选与不算   表示最后一个点是j  dp[i] [j] 
 #define int long long
 #define endl "\n"
 using namespace std;
-
 const int N = 17 ;
 int T, n,m, a[N];
 int dis[N][N],dp[1<<N][N];
@@ -521,9 +520,9 @@ dp[1][1]=0; //从1出发
 
 for(int i=0;i<(1<<n);i++){
     for(int j=1;j<=n;j++){
-        if(i&(1<<(j-1)))
+        if(i&(1<<(j-1))) // i 中已经过第j个  可以转移
         for(int k=1;k<=n;k++){
-            if(i&(1<<(k-1)))
+            if(i&(1<<(k-1)))  // 枚举j前一个走过的点k
                 dp[i][j]=min(dp[i][j],dp[i^(1<<j-1)][k]+dis[k][j]);
         //	if(i&(1<<k-1))continue;
 		// 	dp[i|(1<<(k-1))][k]=min(dp[i|(1<<k-1)][k],dp[i][j]+dis[j][k]);
@@ -534,7 +533,7 @@ for(int i=0;i<(1<<n);i++){
 	long long ans=1e9+7;
 		for(int i=1;i<=n;i++)ans=min(ans,dp[(1<<n)-1][i]+dis[i][1]);
 		cout<<ans<<endl;
-//若求最小哈密尔顿  则  ans= d[1<<n-1][n]  
+//若求最小哈密尔顿  则  ans= d[1<<n-1][n]  	
 
 }
 signed main() {
@@ -549,6 +548,56 @@ signed main() {
   return 0;
 }
 
+```
+
+### acwing91最短Hamilton路径
+
+```c++
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#define int long long 
+
+using namespace std;
+const int N = 20;
+int dis[N][N],dp[1<<N][N]; // 索引只能从0开始   卡空间
+// dp[s][j]  到达状态为s 末节点为j 的最短距离
+// 转移: dp[s][j] = min(dp[t][k],..)  t is s minus a 0 , k is the existed 1 in s
+int n;
+signed main(){
+    cin>>n;
+    // input adjacency matrix 
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>dis[i][j];
+        }
+    }
+    
+    memset(dp,0x3f,sizeof dp); // 初始化 inf
+    dp[1][0]=0; // 起点为0
+    for(int s=0;s<(1<<n);s++){
+         if (!(s & 1))continue; // 优化  起点为1
+        for(int j=0;j<n;j++){
+            if(s&(1<<j)){ // s中已包含j
+                for(int k=0;k<n;k++){ 
+                    if((s&(1<<k))&&k!=j){// 同理包含k
+                        int t = s ^(1<<j); // s 去掉j
+                        // if(dp[t][k]+dis[k][j]<dp[s][j])cout<<"update"<<" "<<j<<endl;
+                        dp[s][j] = min(dp[s][j], dp[t][k]+dis[k][j]);
+                    }
+                }
+            }
+                
+        }
+    }
+    
+        // for(int i=1;i<=n;i++)cout<<dp[(1<<n)-1][i]<<" ";
+        cout<<dp[(1<<n)-1][n-1]<<endl;
+    
+    
+    
+    return 0;
+}
 ```
 
 

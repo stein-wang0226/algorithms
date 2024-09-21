@@ -566,3 +566,88 @@ signed main() {
 
 ```
 
+### acwing291蒙德里安的梦想
+
+二进制状压+思维
+
+![image-20240818193957067](C:\Users\86172\AppData\Roaming\Typora\typora-user-images\image-20240818193957067.png)
+
+//  思路  
+// 1.用二进制表示一列的状态
+// 2. 只考虑放横的  然后判断每一列合法性： 连续的空格是否为偶数
+// 3.考虑横放占两格：  dp[i][s] 表示 前i-1列放完，且i-1伸至第i列的状态为s 的合法方案数
+//   考虑dp[i-1][t] 转移到dp[i][s] 的合法条件
+// (1) s&k == 0 不能重合 因为每个会两列
+
+```
+//  思路  
+// 1.用二进制表示一列的状态
+// 2. 只考虑放横的  然后判断每一列合法性： 连续的空格是为偶数
+// 3.考虑横放占两格：  dp[i][s] 表示 前i-1列放完，且i-1伸至第i列的状态为s 的合法方案数
+//   考虑dp[i-1][t] 转移到dp[i][s] 的合法条件
+// (1) s&k == 0 不能重合 因为每个会占两列  (2) s|t 满足连续的0为偶数
+// 为方便判断 预处理出所有合法（连续的0为偶数）的状态  因为仅11位
+
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+const int N = 1e5+5;
+int dp[20][N];
+int n,m;
+int st[N]; // 存每个状态是否合法  连续0都为偶数
+void solve(){
+    memset(dp,0,sizeof dp);
+    
+    for (int i = 0; i < 1 << n; i++) {
+
+        st[i] = true;
+//            记录一列中0的个数
+        int cnt = 0;
+        for (int j = 0; j < n; j++) {
+
+            if (i >> j & 1) {
+                if (cnt & 1) {
+                    st[i] = 0;
+                    break;
+                }
+            }else cnt++;
+        }
+
+        if (cnt & 1) st[i] = 0; // 前导0是要考虑的
+    }
+    
+    
+    
+    // 根据定义 dp[1][0]为 前0行完成(不能放) --> 1列全部竖着放 s=0   
+    dp[1][0]=1;
+    for(int i=1;i<=m+1;i++){ // 遍历列
+        
+        for(int s = 0;s<=(1<<n)-1;s++){ // 遍历s
+            
+            for(int t = 0;t<=(1<<n)-1;t++){ // t
+            
+                if((s&t)==0 && st[s|t]){
+                    dp[i][s]+=dp[i-1][t];
+                }           
+                
+            }
+        }
+    }
+    // dp[m+1][0] 表示1-m 放满   m+1 全竖着   即前m行的所有方案
+    cout<<dp[m+1][0]<<endl;    
+
+}
+signed main(){
+
+    
+    
+    while(cin>>n>>m,n&&m){
+        solve();
+    }
+    
+    
+    
+    return 0;
+}
+```
+

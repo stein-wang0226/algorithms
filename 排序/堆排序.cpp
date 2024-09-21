@@ -41,7 +41,7 @@ cnt=n;
 for(int i=1;i<=n;i++)cin>>h[i];
 
 for(int i=n/2;i>=1;i--)down(i);
-
+//n/2个叶子不需要
 //2.nlog   建堆 每次插入
 // cnt=0; for(int i=1;i<=n;i++){
  // int n;  cin>>k;insert(k);

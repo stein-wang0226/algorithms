@@ -13,7 +13,7 @@ int prim(){
   int res=0;//  最小生成树答案 边长总和
   int S=1;dist[S]=0;vis[S]=1;//同dij 任选起始点
   for(int i=0;i<n-1;i++){// 将n-1个点做n-1次更新加入集合
-    int Min=inf;int ne;// ne 同dij 存最短点 
+    int Min=inf;int ne;// ne 同dij 存最短点
     for(int j=1;j<=n;j++){
       if(!vis[j]){// 未加入集合  **可能与S无边  (与dij不同）
         dist[j]=min(dist[j],G[S][j]);// 松弛  用上一个最近点更新距离
@@ -22,7 +22,7 @@ int prim(){
           }
       }
     }
-    if(Min==inf)return inf;//   不存在 
+    if(Min==inf)return inf;//   不存在
     S=ne;//  赋值给起点
     vis[S]=1;//标记
    res+=Min;

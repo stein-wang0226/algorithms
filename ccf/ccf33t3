@@ -1,0 +1,106 @@
+ // 高斯消元  齐次方程 判断是否存在非零解  线性无关  仅0解--唯一解 R = n //   R<n -->非零解 yes
+//注意double
+#include <bits/stdc++.h>
+
+using namespace std;
+// map 记录元素string并编号   右侧-号可省略
+const int N = 105;
+const double eps=1e-8;   //   0
+double M[N][N]; //
+int n,m;
+
+bool guass(int rr,int cc){ // 此处为
+    // 仅计算秩R < cc
+	int c = 1,r = 1;
+	for(c = 1;c<=cc;c++){ // 遍历列
+
+		int maxr = r; //
+		for(int i=r+1;i<=rr;i++) if(fabs(M[i][c])>fabs(M[maxr][c]))maxr = i; // 找abs最大的 移到顶端
+		if(fabs(M[maxr][c])<eps)continue; // 全0 下一列
+		if(maxr!=r)for(int i=c;i<=cc;i++)swap(M[maxr][i],M[r][i]);//移到未处理顶端(前面0不用)
+		// 用当前首行消
+		// 先归一
+        for(int i=cc;i>=c;i--)M[r][i]/=M[r][c]; //将当前行的首位变一，(整行同乘) ，从后往前防止首位1改变影响
+		// 消去同c列下方的非0
+		for(int i = r+1;i<= rr;i++){ // 行
+			double alpha = M[i][c]; // 系数
+			if(fabs(alpha)>eps){ // non-zero
+				for(int j = cc;j>=c;j--){ // 行变换消去 已存alpha可正序
+					M[i][j]-= alpha * M[r][j];
+				}
+			}
+		}
+		r++;//完成一行  固定
+
+	}
+
+	int R = r-1; // 秩  r初始1 ，-1
+	return (R<cc); //
+
+}
+
+
+
+int main(){
+	cin>>n;
+	while(n--){
+		cin>>m;
+		string s; // 表达式
+		map<string,vector<pair<int,int>>>cnt; //每个元素 ---->每个化合物的个数 pair(id,cnt)
+        // 注意 处理0
+
+		for(int i=1;i<=m;i++){
+			cin>>s;
+			// split
+			string tmp; // 元素名
+			int count=0;
+			int is_digit = 0 ;// 当前是数字
+			for(int j=0;j<s.size();j++){
+				char ch = s[j];
+				if(ch>='0'&&ch<='9'){
+					is_digit =1;
+					count = count*10 + int(ch-'0'); //
+				}
+				else{
+					// 如果上一个是数字  计算上一个元素
+					if(is_digit){
+						cnt[tmp].push_back(make_pair(i,count));
+						is_digit = 0;
+						count = 0;
+						tmp = "";// 清空
+					}
+					tmp+=ch; //
+				}
+			}
+            if(is_digit){ // 最后一个还没算
+            	cnt[tmp].push_back(make_pair(i,count));
+            	is_digit = 0;
+            	count = 0;
+                tmp = "";// 清空
+            }
+        }
+		//
+        int r = 0;
+		// 生成矩阵 M   没存的全0
+        memset(M,0,sizeof(M));
+		for(auto item:cnt){ // 行
+			r++;
+			auto row_ele = item.second;
+			for(auto pr:row_ele){
+				int c = pr.first;
+				M[r][c] = pr.second;
+			}
+		}
+
+		r = cnt.size(); //
+        int c = m; // 列数 x
+        bool ans = guass(r,c);
+        if(ans)cout<<"Y"<<endl;
+        else cout<<"N"<<endl;
+    }
+
+
+
+
+    return 0;
+}

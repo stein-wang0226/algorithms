@@ -1,16 +1,11 @@
 #include <bits/stdc++.h>
-#define LOCAL
 //#define int long long
 using namespace std;
 const int N=1e5+5;
 int T,n,m,k;
-map<string,int>score;// 没人分数
+map<string,int>score;// 每人分数
 map<string,int>get_;//每题可得的分
 signed main(){
-#ifdef LOCAL
-    freopen("data.in","r",stdin);
-    freopen("data.out","w",stdout);
-#endif
 cin>>n>>m>>k;
 string s,s1,s2;
 vector<string>name;// 按序
@@ -30,7 +25,6 @@ if(s2=="AC"&&score.count(s)){
     score[s]+=get_[s1];
 }
 }
-
 for(auto i:name){//  按序
     cout<<i<<" "<<score[i]<<endl;
 }
